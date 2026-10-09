@@ -4,6 +4,7 @@ import com.guilherme.workshopmongo.DTO.UserDTO;
 import com.guilherme.workshopmongo.domain.User;
 import com.guilherme.workshopmongo.repositories.UserRepository;
 import com.guilherme.workshopmongo.services.exception.ObjectNotFoundException;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,4 +38,15 @@ public class UserService {
         findById(id);
         repository.deleteById(id);
     }
+
+    public User update(User obj) {
+        User newObj = findById(obj.getId());
+        updateData(newObj, obj);
+        return repository.save(newObj);
+    }
+
+    private void updateData(User newObj, User obj) {
+        BeanUtils.copyProperties(obj, newObj);
+    }
+
 }
