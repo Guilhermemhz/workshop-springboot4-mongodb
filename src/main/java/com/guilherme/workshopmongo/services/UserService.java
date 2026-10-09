@@ -1,5 +1,6 @@
 package com.guilherme.workshopmongo.services;
 
+import com.guilherme.workshopmongo.DTO.UserDTO;
 import com.guilherme.workshopmongo.domain.User;
 import com.guilherme.workshopmongo.repositories.UserRepository;
 import com.guilherme.workshopmongo.services.exception.ObjectNotFoundException;
@@ -22,5 +23,13 @@ public class UserService {
     public User findById(String id) {
         Optional<User> obj = repository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
+    }
+
+    public User insert(User obj) {
+        return repository.insert(obj);
+    }
+
+    public User fromDTO(UserDTO objDto) {
+        return new User(objDto.getId(), objDto.getName(), objDto.getEmail());
     }
 }
