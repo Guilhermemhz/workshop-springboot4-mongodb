@@ -1,6 +1,7 @@
 package com.guilherme.workshopmongo.resources;
 
 import com.guilherme.workshopmongo.DTO.UserDTO;
+import com.guilherme.workshopmongo.domain.Post;
 import com.guilherme.workshopmongo.domain.User;
 import com.guilherme.workshopmongo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,12 @@ public class UserResource {
         return ResponseEntity.ok().body(objDto);
     }
 
+    @GetMapping(value = "/{id}/posts")
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+        User obj = service.findById(id);
+        return ResponseEntity.ok().body(obj.getPosts());
+    }
+
     @PostMapping
     public ResponseEntity<UserDTO> insert(@RequestBody UserDTO objDto) {
         User obj = service.fromDTO(objDto);
@@ -54,4 +61,6 @@ public class UserResource {
         obj = service.update(obj);
         return ResponseEntity.noContent().build();
     }
+
+
 }
